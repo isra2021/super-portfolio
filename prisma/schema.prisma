@@ -37,3 +37,16 @@ model SocialMediaAccount {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Project {
+  id           Int      @id @default(autoincrement())
+  name         String
+  description  String?
+  deployUrl    String?
+  frontendUrl  String?
+  backendUrl   String?
+  images       String[]
+  technologies String[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
