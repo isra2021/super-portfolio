@@ -7,6 +7,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Link from "next/link";
 
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {getProjects} from "@/app/lib/actions";
@@ -40,8 +41,12 @@ export default async function TableComponent() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align='end'>
                   <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                  <DropdownMenuItem>Edit</DropdownMenuItem>
-                  <DropdownMenuItem>Delete</DropdownMenuItem>
+                  <Link href={`/dashboard/projects/edit/${project.id}`}>
+                    <DropdownMenuItem>Edit</DropdownMenuItem>
+                  </Link>
+                  <Link href={`/dashboard/projects/delete/${project.id}`}>
+                    <DropdownMenuItem>Delete</DropdownMenuItem>
+                  </Link>
                 </DropdownMenuContent>
               </DropdownMenu>
             </TableCell>

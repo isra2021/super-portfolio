@@ -9,8 +9,29 @@ datasource db {
 }
 
 enum Role {
-  admin
-  user
+  ADMIN
+  USER
+}
+
+enum TechCategory {
+  FRONTEND
+  BACKEND
+}
+
+enum TechType {
+  FRAMEWORK
+  LIBRARY
+}
+
+enum DatabaseType {
+  SQL
+  NOSQL
+}
+
+enum LanguageType {
+  PROGRAMMING
+  STYLING
+  MARKUP
 }
 
 model User {
@@ -20,33 +41,78 @@ model User {
   email               String               @unique
   password            String
   birthdate           DateTime?            @db.Date
-  role                Role                 @default(admin)
+  role                Role                 @default(ADMIN)
   socialMediaAccounts SocialMediaAccount[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
 }
 
 model SocialMediaAccount {
-  id       Int    @id @default(autoincrement())
-  platform String @unique
-  url      String
-  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId   Int
-
+  id        Int      @id @default(autoincrement())
+  platform  String   @unique
+  url       String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Project {
-  id           Int      @id @default(autoincrement())
+  id           Int           @id @default(autoincrement())
   name         String
   description  String?
   deployUrl    String?
   frontendUrl  String?
   backendUrl   String?
   images       String[]
-  technologies String[]
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  technologies Technologies?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Language {
+  id                  Int                @id @default(autoincrement())
+  name                String             @unique
+  techCategories      TechCategory[]
+  languageType        LanguageType       @default(PROGRAMMING)
+  frameworksLibraries FrameworkLibrary[]
+  technologies        Technologies[]
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+}
+
+model Database {
+  id           Int            @id @default(autoincrement())
+  name         String         @unique
+  techCategory TechCategory   @default(BACKEND)
+  databaseType DatabaseType   @default(SQL)
+  technologies Technologies[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+}
+
+model FrameworkLibrary {
+  id           Int            @id @default(autoincrement())
+  name         String         @unique
+  language     Language[]
+  techCategory TechCategory   @default(FRONTEND)
+  techType     TechType       @default(LIBRARY)
+  technologies Technologies[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+}
+
+model Technologies {
+  id        Int     @id @default(autoincrement())
+  projectId Int     @unique
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  frameworkLibrary FrameworkLibrary[]
+
+  language Language[]
+
+  database Database[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

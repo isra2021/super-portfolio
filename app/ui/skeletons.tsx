@@ -35,3 +35,61 @@ export function ProjectsTableSkeleton() {
     </Table>
   );
 }
+
+export default function SkeletonForm() {
+  return (
+    <div className='space-y-8'>
+      <div className='flex flex-col gap-2'>
+        <Skeleton className='h-6 w-20' />
+        <Skeleton className='h-10 w-full' />
+        <Skeleton className='h-4 w-1/4' />
+      </div>
+
+      <div className='flex flex-col gap-2'>
+        <Skeleton className='h-6 w-20' />
+        <Skeleton className='h-24 w-full' />
+        <Skeleton className='h-4 w-1/4' />
+      </div>
+
+      {Array.from({length: 3}, (_, index) => {
+        return (
+          <div key={index} className='flex flex-col gap-2'>
+            <Skeleton className='h-6 w-20' />
+            <Skeleton className='h-10 w-full' />
+            <Skeleton className='h-4 w-1/4' />
+          </div>
+        );
+      })}
+
+      <div className='flex flex-col gap-2'>
+        <Skeleton className='h-6 w-20' />
+        <Skeleton className='h-24 w-full' />
+        <Skeleton className='h-4 w-1/4' />
+      </div>
+
+      <div>
+        <Skeleton className='h-6 w-20' />
+        <div className='grid gap-2 max-w-[600px] grid-rows-auto mt-4'>
+          <div className='aspect-square w-full'>
+            <Skeleton className='w-full h-full rounded-md object-cover' />
+          </div>
+
+          <div className='grid grid-cols-3 gap-2'>
+            <div className='aspect-square'>
+              <Skeleton className='w-full h-full rounded-md' />
+            </div>
+            <div className='aspect-square'>
+              <Skeleton className='w-full h-full rounded-md' />
+            </div>
+            <div className='aspect-square'>
+              <Skeleton className='w-full h-full rounded-md' />
+            </div>
+          </div>
+          <Skeleton className='h-4 w-3/4' />
+        </div>
+      </div>
+
+      <Skeleton className='h-10 w-32' />
+    </div>
+  );
+}

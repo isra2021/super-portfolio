@@ -18,24 +18,28 @@ import {Sheet, SheetContent, SheetTrigger} from "@/components/ui/sheet";
 import {cn} from "@/lib/utils";
 import {SidebarNav} from "../ui/sidebar-nav";
 
+export type NavItem = {
+  name: string;
+  path: string;
+};
+
+const routes: {[key: string]: NavItem[]} = {
+  projects: [
+    {name: "Projects", path: "/dashboard/projects"},
+    {name: "Create", path: "/dashboard/projects/create"},
+  ],
+};
+
+const getUrlSideNavBar = (pathname: string): NavItem[] => {
+  return Object.keys(routes)
+    .filter((key) => pathname.includes(key))
+    .flatMap((key) => routes[key]);
+};
+
 export default function DashboardLayout({children}: {children: React.ReactNode}) {
   const pathname = usePathname();
   const links = [{name: "Projects", href: "/dashboard/projects"}];
-
-  let sidebarNavItems: {title: string; href: string}[] = [];
-
-  if (pathname.includes("/project")) {
-    sidebarNavItems = [
-      {
-        title: "Projects",
-        href: "/project",
-      },
-      {
-        title: "Create",
-        href: "/project/create",
-      },
-    ];
-  }
+  const sideBarLinks = getUrlSideNavBar(pathname);
 
   return (
     <div className='flex min-h-screen w-full flex-col'>
@@ -117,7 +121,7 @@ export default function DashboardLayout({children}: {children: React.ReactNode})
         <Separator className='my-6' />
         <div className='flex flex-1 flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0'>
           <aside className='-mx-4 lg:w-1/5'>
-            <SidebarNav items={sidebarNavItems} />
+            <SidebarNav items={sideBarLinks} />
           </aside>
           <main className='flex-1'>{children}</main>
         </div>

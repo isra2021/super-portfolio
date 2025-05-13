@@ -3,7 +3,6 @@ import {CardContent, CardDescription, CardHeader, CardTitle} from "@/components/
 import {ProjectsTableSkeleton} from "@/app/ui/skeletons";
 import {Tabs, TabsContent} from "@/components/ui/tabs";
 import TableComponent from "@/app/ui/dashboard/table";
-import {getProjects} from "@/app/lib/actions";
 
 export default async function Page() {
   return (
